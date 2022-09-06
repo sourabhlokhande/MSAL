@@ -1,0 +1,69 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4" *ngIf="books.length">Books</h1>
+      <h1 class="display-4" *ngIf="books.length == 0">There is no book in the Database</h1>
+    </div>
+  </div>
+<div class="tablesize" >
+<table class="table table-striped table-bordered" *ngIf="books.length" >
+    <thead class="thead-light">
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th *ngIf="isUserLoggedIn()">Update</th>
+            <th *ngIf="isUserLoggedIn()">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of books">
+            <td>{{book.title}}</td>
+            <td>{{book.genre}}</td>  
+            <td>{{book.author}}</td>
+            <td>{{book.price}}</td>
+          <td *ngIf="isUserLoggedIn()"><button render="renderer" class="btn btn-primary" *ngIf="isUserLoggedIn()">Edit</button></td>
+          <td *ngIf="isUserLoggedIn()"><button render="renderer" class="btn btn-primary" *ngIf="isUserLoggedIn()" (click)="deleteBook(book)">Delete</button></td>
+          
+        </tr>
+    </tbody>
+</table>
+<br>
+<div *ngIf="isUserLoggedIn()">
+    <button render="renderer" class="btn btn-primary" *ngIf="isUserLoggedIn()" (click)="showAddBook()">Add Book</button>
+</div>
+</div>
+
+<div *ngIf='addBookForm' class="container">
+    <h1>Add Book</h1>
+    <div class="cards-container">
+        <div class="cards-form">
+            <form #form="ngForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="">Title</label>
+                    <input type="text" name="Title" [(ngModel)]="book.title" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Genre</label>
+                    <input type="text" name="Category" [(ngModel)]="book.genre" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Author</label>
+                    <input type="text" name="Author"  [(ngModel)]="book.author" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="text" name="Price" [(ngModel)]="book.price" required>
+                </div>
+                <div class="form-group">
+                    <button *ngIf="!saved_btn">Save</button>
+                    <button type="button" disabled *ngIf="saved_btn" >
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        Saving...
+                      </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
